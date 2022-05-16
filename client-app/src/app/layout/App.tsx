@@ -10,22 +10,54 @@ import ActivityDetails from '../../features/activities/details/ActivityDetails';
 
 function App() {
   const location = useLocation();
+
+  function renderActivitiesDashboard(){
+    return (
+      <>
+            <NavBar />
+            <Container  style={{marginTop: '7em'}}>
+            <ActivityDashboard/>
+            </Container>
+          </>
+    );
+  }
+  function renderActivityDetails(){
+    return (
+      <>
+            <NavBar />
+            <Container  style={{marginTop: '7em'}}>
+            <ActivityDetails/>
+            </Container>
+          </>
+    );
+  }
+
+  function renderActivityForm(){
+    return (
+      <>
+            <NavBar />
+            <Container  style={{marginTop: '7em'}}>
+            <ActivityForm key={location.key}/>
+            </Container>
+          </>
+    );
+  }
+
   return (
     <>
     
-        <NavBar />
-        <Container  style={{marginTop: '7em'}}>
+        
         <Routes>
           
           <Route path='/' element={<HomePage/>}/>
-          <Route path='/activities' element={<ActivityDashboard/>}/>
-          <Route path='/activities/:id' element={<ActivityDetails/>}/>
-          <Route path='/createActivity' element={<ActivityForm key={location.key}/>}/>
-          <Route path='/manage/:id' element={<ActivityForm key={location.key}/>}/>
+          <Route path='/activities' element={renderActivitiesDashboard()}/>
+          <Route path='/activities/:id' element={renderActivityDetails()}/>
+          <Route path='/createActivity' element={renderActivityForm()}/>
+          <Route path='/manage/:id' element={renderActivityForm()}/>
 
         </Routes>
          
-        </Container>
+        
         
     </>
   );
