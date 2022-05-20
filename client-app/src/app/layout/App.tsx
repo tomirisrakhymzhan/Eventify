@@ -15,6 +15,7 @@ import LoginForm from '../../features/users/LoginForm';
 import { useStore } from '../stores/store';
 import LoadingComponent from './LoadingComponent';
 import ModalContainer from '../common/modals/ModalContainer';
+import ProfilePage from '../../features/profiles/ProfilePage';
 
 function App() {
   const location = useLocation();
@@ -58,6 +59,16 @@ function App() {
           </>
     );
   }
+  function renderProfilePage(){
+    return (
+      <>
+            <NavBar />
+            <Container  style={{marginTop: '7em'}}>
+            <ProfilePage/>
+            </Container>
+          </>
+    );
+  }
   if (!commonStore.appLoaded) return <LoadingComponent content='Loading app...' />
 
 
@@ -74,6 +85,7 @@ function App() {
           <Route path='/createActivity' element={renderActivityForm()}/>
           <Route path='/manage/:id' element={renderActivityForm()}/>
           <Route path='/errors' element={<TestErrors/>} />
+          <Route path='/profiles/:username' element={renderProfilePage()} />
           <Route path="*" element={<NotFound/>}/>
           <Route path="/server-error" element={<ServerError/>}/>
           <Route path="/login" element={<LoginForm/>}/>
