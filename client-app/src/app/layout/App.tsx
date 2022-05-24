@@ -16,10 +16,13 @@ import { useStore } from '../stores/store';
 import LoadingComponent from './LoadingComponent';
 import ModalContainer from '../common/modals/ModalContainer';
 import ProfilePage from '../../features/profiles/ProfilePage';
+import PrivateRoute from './PrivateRoute';
+
 
 function App() {
   const location = useLocation();
   const {commonStore, userStore} = useStore();
+  const {isLoggedIn} = userStore;
   useEffect(() => {
     if (commonStore.token) {
       userStore.getUser().finally(() => commonStore.setAppLoaded());
@@ -78,18 +81,17 @@ function App() {
         <ToastContainer position='top-right' hideProgressBar/>
         <ModalContainer/>
         <Routes>
-          
           <Route path='/' element={<HomePage/>}/>
-          <Route path='/activities' element={renderActivitiesDashboard()}/>
-          <Route path='/activities/:id' element={renderActivityDetails()}/>
-          <Route path='/createActivity' element={renderActivityForm()}/>
-          <Route path='/manage/:id' element={renderActivityForm()}/>
-          <Route path='/errors' element={<TestErrors/>} />
-          <Route path='/profiles/:username' element={renderProfilePage()} />
+          <Route element={<PrivateRoute isLoggedIn={isLoggedIn}/>}>
+            <Route path='/activities' element={renderActivitiesDashboard()}/>
+            <Route path='/activities/:id' element={renderActivityDetails()}/>
+            <Route path='/createActivity' element={renderActivityForm()}/>
+            <Route path='/manage/:id' element={renderActivityForm()}/>
+            <Route path='/errors' element={<TestErrors/>} />
+            <Route path='/profiles/:username' element={renderProfilePage()} />
+          </Route>
           <Route path="*" element={<NotFound/>}/>
           <Route path="/server-error" element={<ServerError/>}/>
-          <Route path="/login" element={<LoginForm/>}/>
-
         </Routes>
          
         

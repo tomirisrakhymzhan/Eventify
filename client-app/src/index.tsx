@@ -9,11 +9,13 @@ import App from './app/layout/App';
 import reportWebVitals from './reportWebVitals';
 import {StoreContext, store} from './app/stores/store';
 import { BrowserRouter } from 'react-router-dom';
+import ScrollToTop from './app/layout/ScrollToTop';
 
 
 ReactDOM.render(
   <StoreContext.Provider value={store}>
     <BrowserRouter>
+      <ScrollToTop/>
       <App />
     </BrowserRouter>
   </StoreContext.Provider>,
