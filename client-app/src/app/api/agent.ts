@@ -6,6 +6,8 @@ import { Photo, Profile, UserActivity } from '../models/profile';
 import { User, UserFormValues } from '../models/user';
 import { store } from '../stores/store';
 
+axios.defaults.baseURL = process.env.REACT_APP_API_URL;
+
 const sleep = (delay: number) => {
     return new Promise((resolve) => {
         setTimeout(resolve, delay)
@@ -18,7 +20,8 @@ axios.interceptors.request.use(config => {
 })
 
 axios.interceptors.response.use(async response => {
-    await sleep(1000);
+    if(process.env.NODE_ENV === "development") await sleep(1000);
+    
     const pagination = response.headers['pagination'];
     if (pagination) {
         response.data = new PaginatedResult(response.data, JSON.parse(pagination));
@@ -63,7 +66,6 @@ axios.interceptors.response.use(async response => {
     return Promise.reject(error);
 })
 
-axios.defaults.baseURL = 'http://localhost:5000/api';
 
 const responseBody = <T> (response: AxiosResponse<T>) => response.data;
 
@@ -103,7 +105,7 @@ const Profiles = {
     updateFollowing: (username: string) => requests.post(`/follow/${username}`, {}),
     listFollowings: (username: string, predicate: string) => 
         requests.get<Profile[]>(`/follow/${username}?predicate=${predicate}`),
-        listActivities: (username: string, predicate: string) =>
+    listActivities: (username: string, predicate: string) =>
         requests.get<UserActivity[]>(`/profiles/${username}/activities?predicate=${predicate}`),
 }
 const agent = {
