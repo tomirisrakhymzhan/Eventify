@@ -1,5 +1,5 @@
 # Eventify
-A social app to create and discuss events. See [demo](https://my-eventify.herokuapp.com/)
+A social app to create and discuss events. See [demo](https://the-eventify.herokuapp.com/)
 ## Clean Architecture
 Backend of the app is built using .NET 6
 
